@@ -30,7 +30,8 @@ data class UserPreferences(
     val collectionIntervalMinutes: Int,
     val customDesignCapacityMah: Float?,
     val firstLaunchTimestamp: Long,
-    val isOnboardingCompleted: Boolean
+    val isOnboardingCompleted: Boolean,
+    val widgetGlassOpacity: Int = 75 // 20 to 100 percentage
 )
 
 class UserPreferencesRepository(private val context: Context) {
@@ -43,6 +44,7 @@ class UserPreferencesRepository(private val context: Context) {
         private val KEY_CUSTOM_CAPACITY = floatPreferencesKey("custom_design_capacity")
         private val KEY_FIRST_LAUNCH = longPreferencesKey("first_launch_timestamp")
         private val KEY_ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
+        private val KEY_WIDGET_GLASS_OPACITY = intPreferencesKey("widget_glass_opacity")
     }
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data
@@ -54,27 +56,29 @@ class UserPreferencesRepository(private val context: Context) {
             }
         }
         .map { preferences ->
-        val themeString = preferences[KEY_THEME_MODE] ?: ThemeMode.LIGHT.name
-        val theme = try {
-            ThemeMode.valueOf(themeString)
-        } catch (_: Exception) {
-            ThemeMode.LIGHT
-        }
-        val monitoring = preferences[KEY_MONITORING_ENABLED] ?: true
-        val interval = preferences[KEY_COLLECTION_INTERVAL] ?: 15
-        val customCap = preferences[KEY_CUSTOM_CAPACITY]
-        val firstLaunch = preferences[KEY_FIRST_LAUNCH] ?: System.currentTimeMillis()
-        val onboarding = preferences[KEY_ONBOARDING_COMPLETED] ?: false
+            val themeString = preferences[KEY_THEME_MODE] ?: ThemeMode.LIGHT.name
+            val theme = try {
+                ThemeMode.valueOf(themeString)
+            } catch (_: Exception) {
+                ThemeMode.LIGHT
+            }
+            val monitoring = preferences[KEY_MONITORING_ENABLED] ?: true
+            val interval = preferences[KEY_COLLECTION_INTERVAL] ?: 15
+            val customCap = preferences[KEY_CUSTOM_CAPACITY]
+            val firstLaunch = preferences[KEY_FIRST_LAUNCH] ?: System.currentTimeMillis()
+            val onboarding = preferences[KEY_ONBOARDING_COMPLETED] ?: false
+            val opacity = preferences[KEY_WIDGET_GLASS_OPACITY] ?: 75
 
-        UserPreferences(
-            themeMode = theme,
-            isMonitoringEnabled = monitoring,
-            collectionIntervalMinutes = interval,
-            customDesignCapacityMah = customCap,
-            firstLaunchTimestamp = firstLaunch,
-            isOnboardingCompleted = onboarding
-        )
-    }
+            UserPreferences(
+                themeMode = theme,
+                isMonitoringEnabled = monitoring,
+                collectionIntervalMinutes = interval,
+                customDesignCapacityMah = customCap,
+                firstLaunchTimestamp = firstLaunch,
+                isOnboardingCompleted = onboarding,
+                widgetGlassOpacity = opacity
+            )
+        }
 
     suspend fun setThemeMode(mode: ThemeMode) {
         dataStore.edit { preferences ->
@@ -110,6 +114,12 @@ class UserPreferencesRepository(private val context: Context) {
         }
     }
 
+    suspend fun setWidgetGlassOpacity(opacity: Int) {
+        dataStore.edit { preferences ->
+            preferences[KEY_WIDGET_GLASS_OPACITY] = opacity.coerceIn(15, 100)
+        }
+    }
+
     suspend fun initFirstLaunchIfEmpty() {
         dataStore.edit { preferences ->
             if (preferences[KEY_FIRST_LAUNCH] == null) {
@@ -124,6 +134,7 @@ class UserPreferencesRepository(private val context: Context) {
             preferences[KEY_THEME_MODE] = ThemeMode.LIGHT.name
             preferences[KEY_FIRST_LAUNCH] = System.currentTimeMillis()
             preferences[KEY_ONBOARDING_COMPLETED] = false
+            preferences[KEY_WIDGET_GLASS_OPACITY] = 75
         }
     }
 }

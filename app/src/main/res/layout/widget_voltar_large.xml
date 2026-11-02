@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Frosted Glass Background -->
+    <ImageView
+        android:id="@+id/widget_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:contentDescription="@null" />
+
+    <!-- Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Top Half: Overview -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:baselineAligned="false">
+
+            <!-- Left Details -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/widget_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VOLTAR BATTERY INTELLIGENCE"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#8E8E93"
+                    android:letterSpacing="0.05" />
+
+                <TextView
+                    android:id="@+id/widget_health_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="102%"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:textColor="#111111"
+                    android:includeFontPadding="false" />
+
+                <!-- Capacity -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="4dp">
+
+                    <ImageView
+                        android:layout_width="4dp"
+                        android:layout_height="12dp"
+                        android:layout_marginEnd="6dp"
+                        android:src="@drawable/widget_pill_emerald"
+                        android:contentDescription="@null" />
+
+                    <TextView
+                        android:id="@+id/widget_capacity_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5,125 mAh (Estimated)"
+                        android:textSize="12sp"
+                        android:textColor="#333333" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Right Gauge -->
+            <FrameLayout
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_marginStart="8dp">
+
+                <ImageView
+                    android:id="@+id/widget_gauge_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Gauge" />
+
+                <TextView
+                    android:id="@+id/widget_gauge_center_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="97%"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#111111" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <!-- Subtle Glass Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#208E8E93"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- Bottom Row: 3 Telemetry Cards -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <!-- Card 1: Voltage & Temp -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VOLTAGE"
+                    android:textSize="9sp"
+                    android:textColor="#8E8E93"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/widget_voltage_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.40 V"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#111111" />
+            </LinearLayout>
+
+            <!-- Card 2: Temperature -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TEMP"
+                    android:textSize="9sp"
+                    android:textColor="#8E8E93"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/widget_temp_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="39°C (Warm)"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#111111" />
+            </LinearLayout>
+
+            <!-- Card 3: Status / Milestone -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STATUS"
+                    android:textSize="9sp"
+                    android:textColor="#8E8E93"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/widget_status_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="24h Preliminary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#00E676" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -52,6 +52,45 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- One UI 9 Medium Glassy Widget (4x2) -->
+        <receiver
+            android:name=".widget.VoltarMediumWidgetProvider"
+            android:label="@string/widget_medium_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_voltar_medium_info" />
+        </receiver>
+
+        <!-- One UI 9 Small Square Widget (2x2) -->
+        <receiver
+            android:name=".widget.VoltarSmallWidgetProvider"
+            android:label="@string/widget_small_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_voltar_small_info" />
+        </receiver>
+
+        <!-- One UI 9 Large Diagnostics Widget (4x3) -->
+        <receiver
+            android:name=".widget.VoltarLargeWidgetProvider"
+            android:label="@string/widget_large_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_voltar_large_info" />
+        </receiver>
+
     </application>
 
 </manifest>

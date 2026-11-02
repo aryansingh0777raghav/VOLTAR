@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">VOLTAR</string>
+    <string name="widget_medium_name">VOLTAR Health Overview</string>
+    <string name="widget_medium_desc">One UI 9 glassmorphic battery health &amp; live diagnostics overview.</string>
+    <string name="widget_small_name">VOLTAR Quick Health</string>
+    <string name="widget_small_desc">Compact square glassmorphic circular health gauge.</string>
+    <string name="widget_large_name">VOLTAR Full Diagnostics</string>
+    <string name="widget_large_desc">Expanded glassmorphic dashboard with live telemetry and wear milestones.</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.voltar.battery.VoltarApplication
+import com.voltar.battery.widget.VoltarWidgetUpdater
 
 class BatteryMonitoringWorker(
     appContext: Context,
@@ -17,6 +18,7 @@ class BatteryMonitoringWorker(
 
             val observation = container.diagnosticsEngine.getCurrentObservation()
             container.batteryRepository.recordObservation(observation)
+            VoltarWidgetUpdater.updateAllWidgets(applicationContext)
 
             Result.success()
         } catch (_: Exception) {

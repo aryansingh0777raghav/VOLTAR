@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.voltar.battery.VoltarApplication
+import com.voltar.battery.widget.VoltarWidgetUpdater
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ class BatteryChangeReceiver : BroadcastReceiver() {
                 container.monitoringScheduler.scheduleMonitoring()
                 val obs = container.diagnosticsEngine.getCurrentObservation()
                 container.batteryRepository.recordObservation(obs)
+                VoltarWidgetUpdater.updateAllWidgets(context)
             }
             return
         }
@@ -33,6 +35,7 @@ class BatteryChangeReceiver : BroadcastReceiver() {
             CoroutineScope(Dispatchers.IO).launch {
                 val obs = container.diagnosticsEngine.getCurrentObservation()
                 container.batteryRepository.recordObservation(obs)
+                VoltarWidgetUpdater.updateAllWidgets(context)
             }
         }
     }

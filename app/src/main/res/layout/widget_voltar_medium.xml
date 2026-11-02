@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Frosted Glass Background -->
+    <ImageView
+        android:id="@+id/widget_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:contentDescription="@null" />
+
+    <!-- Content Layer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:baselineAligned="false">
+
+        <!-- Left Details Column -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- App Title & Subtitle -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/widget_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VOLTAR"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#8E8E93"
+                    android:letterSpacing="0.05" />
+
+                <TextView
+                    android:id="@+id/widget_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="• Battery Health"
+                    android:textSize="11sp"
+                    android:textColor="#00E676" />
+            </LinearLayout>
+
+            <!-- Large Health Percentage -->
+            <TextView
+                android:id="@+id/widget_health_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="102%"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="#111111"
+                android:includeFontPadding="false" />
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="6dp" />
+
+            <!-- Metric 1: Capacity -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="3dp">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="7dp"
+                    android:src="@drawable/widget_pill_emerald"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/widget_capacity_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5,125 mAh (Est.)"
+                    android:textSize="12sp"
+                    android:textColor="#333333"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+            <!-- Metric 2: Voltage -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="3dp">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="7dp"
+                    android:src="@drawable/widget_pill_cyan"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/widget_voltage_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.40 V (Normal)"
+                    android:textSize="12sp"
+                    android:textColor="#333333"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+            <!-- Metric 3: Temperature -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="4dp"
+                    android:layout_height="13dp"
+                    android:layout_marginEnd="7dp"
+                    android:src="@drawable/widget_pill_amber"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/widget_temp_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="39°C (Normal)"
+                    android:textSize="12sp"
+                    android:textColor="#333333"
+                    android:maxLines="1"
+                    android:ellipsize="end" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Right Donut Gauge Column -->
+        <FrameLayout
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp">
+
+            <ImageView
+                android:id="@+id/widget_gauge_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:contentDescription="Battery Gauge" />
+
+            <TextView
+                android:id="@+id/widget_gauge_center_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="97%"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#111111" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

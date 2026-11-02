@@ -12,11 +12,10 @@ import com.voltar.battery.core.datastore.UserPreferencesRepository
 import com.voltar.battery.core.model.DeviceProfile
 import com.voltar.battery.core.repository.BatteryRepository
 import com.voltar.battery.monitoring.BatteryMonitoringScheduler
+import com.voltar.battery.widget.VoltarWidgetUpdater
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -30,7 +29,8 @@ data class SettingsUiState(
         collectionIntervalMinutes = 15,
         customDesignCapacityMah = null,
         firstLaunchTimestamp = 0L,
-        isOnboardingCompleted = true
+        isOnboardingCompleted = true,
+        widgetGlassOpacity = 75
     ),
     val deviceProfile: DeviceProfile? = null,
     val isClearHistoryDialogVisible: Boolean = false,
@@ -96,6 +96,13 @@ class SettingsViewModel(
         }
     }
 
+    fun setWidgetGlassOpacity(context: Context, opacity: Int) {
+        viewModelScope.launch {
+            preferencesRepository.setWidgetGlassOpacity(opacity)
+            VoltarWidgetUpdater.updateAllWidgets(context)
+        }
+    }
+
     fun showClearHistoryDialog(show: Boolean) {
         _uiState.update { it.copy(isClearHistoryDialogVisible = show) }
     }
@@ -112,48 +119,69 @@ class SettingsViewModel(
         _uiState.update { it.copy(isCreatorSheetVisible = show) }
     }
 
+    fun clearExportStatus() {
+        _uiState.update { it.copy(exportStatusMessage = null) }
+    }
+
     fun clearAllData() {
         viewModelScope.launch {
             batteryRepository.clearAllData()
-            _uiState.update { it.copy(isClearHistoryDialogVisible = false) }
+            _uiState.update {
+                it.copy(
+                    isClearHistoryDialogVisible = false,
+                    exportStatusMessage = "All battery logs and history successfully cleared."
+                )
+            }
         }
     }
 
     fun resetAnalysisOnly() {
         viewModelScope.launch {
             batteryRepository.resetHealthAnalysisOnly()
-            _uiState.update { it.copy(isResetAnalysisDialogVisible = false) }
+            _uiState.update {
+                it.copy(
+                    isResetAnalysisDialogVisible = false,
+                    exportStatusMessage = "Diagnostic health model reset and recalculated."
+                )
+            }
         }
     }
 
     fun exportData(context: Context, asCsv: Boolean) {
         viewModelScope.launch {
-            val content = if (asCsv) {
-                batteryRepository.exportDataAsCsv()
-            } else {
-                batteryRepository.exportDataAsJson()
+            try {
+                val content = if (asCsv) {
+                    batteryRepository.exportDataAsCsv()
+                } else {
+                    batteryRepository.exportDataAsJson()
+                }
+                val filename = if (asCsv) "voltar_battery_logs.csv" else "voltar_diagnostics_export.json"
+                val mimeType = if (asCsv) "text/csv" else "application/json"
+
+                val exportDir = File(context.cacheDir, "exports").apply { mkdirs() }
+                val file = File(exportDir, filename).apply { writeText(content) }
+                val uri = FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.fileprovider",
+                    file
+                )
+
+                val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = mimeType
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    putExtra(Intent.EXTRA_SUBJECT, "VOLTAR Diagnostic Export: $filename")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+
+                val chooser = Intent.createChooser(sendIntent, "Share VOLTAR Export").apply {
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(chooser)
+
+                _uiState.update { it.copy(exportStatusMessage = "Export ready: $filename") }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(exportStatusMessage = "Export failed: ${e.message}") }
             }
-
-            val filename = if (asCsv) "voltar_battery_export.csv" else "voltar_battery_export.json"
-            val file = File(context.cacheDir, filename)
-            file.writeText(content)
-
-            val uri = FileProvider.getUriForFile(
-                context,
-                "${context.packageName}.fileprovider",
-                file
-            )
-
-            val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                type = if (asCsv) "text/csv" else "application/json"
-                putExtra(Intent.EXTRA_STREAM, uri)
-                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-
-            val chooser = Intent.createChooser(sendIntent, "Export Battery Diagnostics").apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-            context.startActivity(chooser)
         }
     }
 }
@@ -165,6 +193,9 @@ class SettingsViewModelFactory(
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SettingsViewModel(preferencesRepository, batteryRepository, monitoringScheduler) as T
+        if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
+            return SettingsViewModel(preferencesRepository, batteryRepository, monitoringScheduler) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

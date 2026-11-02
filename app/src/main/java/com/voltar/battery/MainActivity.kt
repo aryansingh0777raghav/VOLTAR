@@ -14,6 +14,7 @@ import com.voltar.battery.core.datastore.UserPreferences
 import com.voltar.battery.core.di.AppContainer
 import com.voltar.battery.ui.navigation.VoltarNavHost
 import com.voltar.battery.ui.theme.VoltarTheme
+import com.voltar.battery.widget.VoltarWidgetUpdater
 
 class MainActivity : ComponentActivity() {
 
@@ -33,7 +34,8 @@ class MainActivity : ComponentActivity() {
                     collectionIntervalMinutes = 15,
                     customDesignCapacityMah = null,
                     firstLaunchTimestamp = System.currentTimeMillis(),
-                    isOnboardingCompleted = false
+                    isOnboardingCompleted = false,
+                    widgetGlassOpacity = 75
                 )
             )
 
@@ -49,5 +51,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        VoltarWidgetUpdater.updateAllWidgets(this)
     }
 }

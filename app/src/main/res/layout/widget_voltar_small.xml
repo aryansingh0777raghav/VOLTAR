@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Frosted Glass Background -->
+    <ImageView
+        android:id="@+id/widget_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:contentDescription="@null" />
+
+    <!-- Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="12dp">
+
+        <!-- Top Header -->
+        <TextView
+            android:id="@+id/widget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VOLTAR HEALTH"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textColor="#8E8E93"
+            android:letterSpacing="0.08"
+            android:includeFontPadding="false" />
+
+        <!-- Donut Ring with Health in Center -->
+        <FrameLayout
+            android:layout_width="82dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp">
+
+            <ImageView
+                android:id="@+id/widget_gauge_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:contentDescription="Health Gauge" />
+
+            <TextView
+                android:id="@+id/widget_health_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="102%"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#111111" />
+        </FrameLayout>
+
+        <!-- Bottom Quick Stats -->
+        <TextView
+            android:id="@+id/widget_metrics_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="97% • 39°C • 4.40V"
+            android:textSize="11sp"
+            android:textColor="#555555"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+    </LinearLayout>
+
+</FrameLayout>

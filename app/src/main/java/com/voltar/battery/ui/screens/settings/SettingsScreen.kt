@@ -258,6 +258,69 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // 2b. Homescreen Widgets Section
+            SettingsSectionHeader(title = "HOMESCREEN WIDGET (ONE UI 9)")
+
+            GlassmorphicCard(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp)
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text(
+                        text = "Glass Blur and Translucency",
+                        style = VoltarTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.textPrimary,
+                        fontSize = 15.sp
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Adjust the frosted glass blur intensity and background opacity for all homescreen widgets (One UI 9 inspired).",
+                        color = colors.textSecondary,
+                        fontSize = 12.sp,
+                        lineHeight = 17.sp
+                    )
+
+                    Spacer(modifier = Modifier.height(14.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf(
+                            25 to "25% Clear",
+                            50 to "50% Trans",
+                            75 to "75% Frost",
+                            100 to "100% Solid"
+                        ).forEach { (pct, label) ->
+                            val isSelected = prefs.widgetGlassOpacity == pct
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(
+                                        if (isSelected) {
+                                            if (colors.isDark) EmeraldPrimary else VoltarTheme.colors.accent
+                                        } else colors.surfaceVariant
+                                    )
+                                    .clickable { viewModel.setWidgetGlassOpacity(context, pct) }
+                                    .padding(vertical = 8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = label,
+                                    fontSize = 10.sp,
+                                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                                    color = if (isSelected) Color.White else colors.textPrimary
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
             // 3. Hardware & Device Profile Section
             SettingsSectionHeader(title = "DEVICE HARDWARE SPECS")
 
