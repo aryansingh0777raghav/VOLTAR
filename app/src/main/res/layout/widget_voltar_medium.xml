@@ -61,16 +61,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:layout_marginBottom="6dp"
                 android:text="102%"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="#111111"
                 android:includeFontPadding="false" />
-
-            <!-- Spacer -->
-            <View
-                android:layout_width="1dp"
-                android:layout_height="6dp" />
 
             <!-- Metric 1: Capacity -->
             <LinearLayout
