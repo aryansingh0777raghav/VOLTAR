@@ -1,0 +1,9 @@
+VOLTAR is an advanced native Android battery intelligence and diagnostics platform built with Kotlin and Jetpack Compose.
+
+• Real Battery Intelligence: Computes genuine capacity via differential Coulomb charge integrals (ΔQ / ΔSoC) with strict thermal noise rejection (10°C–45°C).
+• 100% Local-First & Private: Runs offline with Room SQLite persistence. Zero ads, zero tracking, zero internet permissions.
+• Real-time Charging Lab: Live voltage in millivolts, calculated wattage (V × I), charging current, session duration, and energy gained.
+• Apple-grade Glassmorphic UI: Custom cubic-bezier smoothed Canvas charts, dynamic circular health gauge, and three persistent themes (Light Default, Obsidian Dark, System).
+• One UI 9 Homescreen Widgets: Interactive glassmorphic widgets (4x2, 2x2, 4x3) with customizable frosted glass blur and opacity.
+• Scientific Milestones: Progressive evaluation across First 24 Hours, 7-Day Multi-Cycle, and 14-Day High Confidence milestones.
+• Raw Data Ownership: Export complete historical battery logs as CSV or structured JSON anytime.
