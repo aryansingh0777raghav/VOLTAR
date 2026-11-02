@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="102%"
+                    android:text="--%"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     android:textColor="#111111"
@@ -75,7 +75,7 @@
                         android:id="@+id/widget_capacity_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5,125 mAh (Estimated)"
+                        android:text="Learning Cycles..."
                         android:textSize="12sp"
                         android:textColor="#333333" />
                 </LinearLayout>
@@ -192,7 +192,7 @@
                     android:id="@+id/widget_status_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="24h Preliminary"
+                    android:text="Collecting Data"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="#00E676" />

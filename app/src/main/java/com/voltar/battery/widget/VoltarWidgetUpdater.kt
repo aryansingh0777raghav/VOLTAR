@@ -85,13 +85,23 @@ object VoltarWidgetUpdater {
                     setImageViewBitmap(R.id.widget_background, bgBitmap)
                     setImageViewBitmap(R.id.widget_gauge_image, gaugeBitmap)
 
-                    setTextViewText(R.id.widget_health_value, "${telemetry.healthPercent.toInt()}%")
+                    val healthText = if (telemetry.healthPercent != null && telemetry.healthPercent > 0f) {
+                        "${telemetry.healthPercent.toInt()}%"
+                    } else {
+                        "--%"
+                    }
+                    setTextViewText(R.id.widget_health_value, healthText)
                     setTextColor(R.id.widget_health_value, textColorPrimary)
 
                     setTextViewText(R.id.widget_gauge_center_text, "${telemetry.levelPercent}%")
                     setTextColor(R.id.widget_gauge_center_text, textColorPrimary)
 
-                    setTextViewText(R.id.widget_capacity_text, "${telemetry.estimatedCapMah.toInt()} mAh (Est.)")
+                    val capText = if (telemetry.estimatedCapMah != null && telemetry.estimatedCapMah > 0f) {
+                        "${telemetry.estimatedCapMah.toInt()} mAh (Est.)"
+                    } else {
+                        "Learning Cycles..."
+                    }
+                    setTextViewText(R.id.widget_capacity_text, capText)
                     setTextColor(R.id.widget_capacity_text, textColorSecondary)
 
                     setTextViewText(R.id.widget_voltage_text, "${String.format(Locale.US, "%.2f", telemetry.voltageV)} V (${telemetry.voltageStatus})")
@@ -147,7 +157,12 @@ object VoltarWidgetUpdater {
                     setImageViewBitmap(R.id.widget_background, bgBitmap)
                     setImageViewBitmap(R.id.widget_gauge_image, gaugeBitmap)
 
-                    setTextViewText(R.id.widget_health_value, "${telemetry.healthPercent.toInt()}%")
+                    val healthText = if (telemetry.healthPercent != null && telemetry.healthPercent > 0f) {
+                        "${telemetry.healthPercent.toInt()}%"
+                    } else {
+                        "--%"
+                    }
+                    setTextViewText(R.id.widget_health_value, healthText)
                     setTextColor(R.id.widget_health_value, textColorPrimary)
 
                     setTextViewText(
@@ -203,13 +218,23 @@ object VoltarWidgetUpdater {
                     setImageViewBitmap(R.id.widget_background, bgBitmap)
                     setImageViewBitmap(R.id.widget_gauge_image, gaugeBitmap)
 
-                    setTextViewText(R.id.widget_health_value, "${telemetry.healthPercent.toInt()}%")
+                    val healthText = if (telemetry.healthPercent != null && telemetry.healthPercent > 0f) {
+                        "${telemetry.healthPercent.toInt()}%"
+                    } else {
+                        "--%"
+                    }
+                    setTextViewText(R.id.widget_health_value, healthText)
                     setTextColor(R.id.widget_health_value, textColorPrimary)
 
                     setTextViewText(R.id.widget_gauge_center_text, "${telemetry.levelPercent}%")
                     setTextColor(R.id.widget_gauge_center_text, textColorPrimary)
 
-                    setTextViewText(R.id.widget_capacity_text, "${telemetry.estimatedCapMah.toInt()} mAh (Estimated)")
+                    val capText = if (telemetry.estimatedCapMah != null && telemetry.estimatedCapMah > 0f) {
+                        "${telemetry.estimatedCapMah.toInt()} mAh (Estimated)"
+                    } else {
+                        "Learning Cycles..."
+                    }
+                    setTextViewText(R.id.widget_capacity_text, capText)
                     setTextColor(R.id.widget_capacity_text, textColorSecondary)
 
                     setTextViewText(R.id.widget_voltage_text, "${String.format(Locale.US, "%.2f", telemetry.voltageV)} V")
@@ -228,13 +253,13 @@ object VoltarWidgetUpdater {
     }
 
     private data class WidgetTelemetry(
-        val healthPercent: Float,
+        val healthPercent: Float?,
         val levelPercent: Int,
         val voltageV: Float,
         val voltageStatus: String,
         val tempCelsius: Int,
         val tempStatus: String,
-        val estimatedCapMah: Float,
+        val estimatedCapMah: Float?,
         val milestoneTitle: String,
         val opacity: Int,
         val themeMode: ThemeMode
@@ -246,11 +271,10 @@ object VoltarWidgetUpdater {
 
         val obs = container.diagnosticsEngine.getCurrentObservation()
         val latestHealth = container.batteryRepository.latestHealthAnalysisFlow.firstOrNull()
-        val profile = container.batteryRepository.getDeviceProfile()
         val prefs = container.userPreferencesRepository.userPreferencesFlow.firstOrNull()
 
-        val healthPct = latestHealth?.healthPercentage ?: 102f
-        val estCap = latestHealth?.estimatedCapacityMah ?: profile.designCapacityMah
+        val healthPct = latestHealth?.healthPercentage
+        val estCap = latestHealth?.estimatedCapacityMah
 
         val voltV = obs.voltageVolts
         val voltStatus = when {
@@ -267,7 +291,7 @@ object VoltarWidgetUpdater {
             else -> "Normal"
         }
 
-        val milestone = latestHealth?.milestone?.title ?: "24h Preliminary"
+        val milestone = latestHealth?.milestone?.title ?: "Learning Cycles"
         val opacity = prefs?.widgetGlassOpacity ?: 75
         val theme = prefs?.themeMode ?: ThemeMode.SYSTEM
 

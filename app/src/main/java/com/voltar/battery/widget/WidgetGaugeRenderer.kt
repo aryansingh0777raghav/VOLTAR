@@ -82,7 +82,7 @@ object WidgetGaugeRenderer {
     fun renderDonutGauge(
         context: Context,
         sizeDp: Int,
-        healthPercent: Float,
+        healthPercent: Float?,
         levelPercent: Int,
         isDark: Boolean
     ): Bitmap {
@@ -105,27 +105,30 @@ object WidgetGaugeRenderer {
         canvas.drawOval(rect, trackPaint)
 
         // 2. Health Progress Arc (One UI Gradient: Emerald Green to Mint Cyan)
-        val sweepAngle = ((healthPercent.coerceIn(0f, 120f) / 100f) * 360f).coerceAtMost(360f)
+        // Only draw when real battery health has been calculated
+        if (healthPercent != null && healthPercent > 0f) {
+            val sweepAngle = ((healthPercent.coerceIn(0f, 120f) / 100f) * 360f).coerceAtMost(360f)
 
-        val arcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            style = Paint.Style.STROKE
-            this.strokeWidth = strokeWidth
-            strokeCap = Paint.Cap.ROUND
+            val arcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                style = Paint.Style.STROKE
+                this.strokeWidth = strokeWidth
+                strokeCap = Paint.Cap.ROUND
 
-            val colors = intArrayOf(
-                Color.parseColor("#00E676"), // Emerald Primary
-                Color.parseColor("#00E5FF"), // Cyan Accent
-                Color.parseColor("#00E676")  // Loop back
-            )
-            val cx = sizePx / 2f
-            val cy = sizePx / 2f
-            shader = SweepGradient(cx, cy, colors, floatArrayOf(0f, 0.7f, 1f))
+                val colors = intArrayOf(
+                    Color.parseColor("#00E676"), // Emerald Primary
+                    Color.parseColor("#00E5FF"), // Cyan Accent
+                    Color.parseColor("#00E676")  // Loop back
+                )
+                val cx = sizePx / 2f
+                val cy = sizePx / 2f
+                shader = SweepGradient(cx, cy, colors, floatArrayOf(0f, 0.7f, 1f))
+            }
+
+            canvas.save()
+            canvas.rotate(-90f, sizePx / 2f, sizePx / 2f)
+            canvas.drawArc(rect, 0f, sweepAngle, false, arcPaint)
+            canvas.restore()
         }
-
-        canvas.save()
-        canvas.rotate(-90f, sizePx / 2f, sizePx / 2f)
-        canvas.drawArc(rect, 0f, sweepAngle, false, arcPaint)
-        canvas.restore()
 
         return bitmap
     }

@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="102%"
+                android:text="--%"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="#111111" />
@@ -62,7 +62,7 @@
             android:id="@+id/widget_metrics_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="97% • 39°C • 4.40V"
+            android:text="--% • --°C • --V"
             android:textSize="11sp"
             android:textColor="#555555"
             android:textStyle="bold"
