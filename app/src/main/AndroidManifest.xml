@@ -91,6 +91,58 @@
                 android:resource="@xml/widget_voltar_large_info" />
         </receiver>
 
+        <!-- One UI 9 Battery Percentage Dial (2x2) -->
+        <receiver
+            android:name=".widget.VoltarBatteryDialWidgetProvider"
+            android:label="@string/widget_battery_dial_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_battery_dial_info" />
+        </receiver>
+
+        <!-- One UI 9 Battery Capsule Pill (2x1) -->
+        <receiver
+            android:name=".widget.VoltarBatteryPillWidgetProvider"
+            android:label="@string/widget_battery_pill_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_battery_pill_info" />
+        </receiver>
+
+        <!-- VOLTAR Charging Lab Widget (4x2) -->
+        <receiver
+            android:name=".widget.VoltarChargingLabWidgetProvider"
+            android:label="@string/widget_charging_lab_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_charging_lab_info" />
+        </receiver>
+
+        <!-- VOLTAR Thermal & Safety Monitor (2x1) -->
+        <receiver
+            android:name=".widget.VoltarThermalWidgetProvider"
+            android:label="@string/widget_thermal_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_thermal_info" />
+        </receiver>
+
     </application>
 
 </manifest>

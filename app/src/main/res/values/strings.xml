@@ -6,4 +6,12 @@
     <string name="widget_small_desc">Compact square glassmorphic circular health gauge.</string>
     <string name="widget_large_name">VOLTAR Full Diagnostics</string>
     <string name="widget_large_desc">Expanded glassmorphic dashboard with live telemetry and wear milestones.</string>
+    <string name="widget_battery_dial_name">VOLTAR Battery Dial</string>
+    <string name="widget_battery_dial_desc">One UI 9 glassmorphic battery dial with live charging speed and voltage.</string>
+    <string name="widget_battery_pill_name">VOLTAR Battery Capsule</string>
+    <string name="widget_battery_pill_desc">Ultra-compact One UI 9 horizontal pill with battery level dial, percentage and live power.</string>
+    <string name="widget_charging_lab_name">VOLTAR Charging Lab</string>
+    <string name="widget_charging_lab_desc">Real-time charging performance, wattage (V × I), current in mA, and thermal power.</string>
+    <string name="widget_thermal_name">VOLTAR Thermal Monitor</string>
+    <string name="widget_thermal_desc">Real-time battery temperature monitor with color-coded safety and thermal protection status.</string>
 </resources>
